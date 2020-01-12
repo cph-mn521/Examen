@@ -68,25 +68,7 @@ public class EMF_Creator {
      * @param strategy 
      * @return The new EntityManagerFactory
      */
-    public static EntityManagerFactory createEntityManagerFactory(DbSelector dbType,Strategy strategy){
-        String puName="pu"; //Only legal name
-        String connection_str;
-        String user;
-        String pw;
-        if(dbType == DbSelector.DEV){
-            connection_str = Settings.getDEV_DBConnection();
-            user = Settings.getPropertyValue("db.user");
-            pw = Settings.getPropertyValue("db.password");
-            System.clearProperty("IS_TEST");
-        } else{          
-            connection_str = Settings.getTEST_DBConnection();
-            //Will ensure REST code "switches" to this DB, even when running on a separate JVM
-            System.setProperty("IS_TEST", connection_str);
-            user = Settings.getPropertyValue("dbtest.user")!= null ? Settings.getPropertyValue("dbtest.user") : Settings.getPropertyValue("db.user") ;
-            pw = Settings.getPropertyValue("dbtest.password")!= null ? Settings.getPropertyValue("dbtest.password") : Settings.getPropertyValue("db.password") ;
-        }
-        return createEntityManagerFactory(puName,connection_str,user,pw,strategy);
-    }
+
     /**
      * Create an EntityManagerFactory using the supplied values
      * @param puName

@@ -50,7 +50,7 @@ public class UserEndpointResource {
     public String getJson() throws AuthenticationException {
         //TODO return proper representation object
         
-        return System.getenv("CONNECTION_STREX");
+        return "Reeee";
     }
 
     /**

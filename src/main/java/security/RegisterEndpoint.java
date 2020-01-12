@@ -46,7 +46,12 @@ import utils.EMF_Creator;
 @Path("register")
 public class RegisterEndpoint {
 
-    private static final EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory("pu", null, null, null, EMF_Creator.Strategy.CREATE);
+    private static final EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory(
+            "pu",
+            "jdbc:mysql://localhost:3307/EXAMEN",
+            "dev",
+            "ax2", 
+            EMF_Creator.Strategy.CREATE);
     public static final UserFacade USER_FACADE = UserFacade.getUserFacade(EMF);
 
     @Context
