@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import errorhandling.AuthenticationException;
 import javax.persistence.RollbackException;
+import utils.EMF_Creator;
 
 /**
  * @author lam@cphbusiness.dk
@@ -26,8 +27,9 @@ public class UserFacade {
     
     public static UserFacade getUserFacade(EntityManagerFactory _emf) {
         if (instance == null) {
-            emf = _emf;
+            emf = EMF_Creator.createEntityManagerFactory("pu", "", "", "", EMF_Creator.Strategy.CREATE);
             instance = new UserFacade();
+            
         }
         return instance;
     }
