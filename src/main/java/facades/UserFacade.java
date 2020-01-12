@@ -27,7 +27,7 @@ public class UserFacade {
     
     public static UserFacade getUserFacade(EntityManagerFactory _emf) {
         if (instance == null) {
-            emf = EMF_Creator.createEntityManagerFactory("pu", "", "", "", EMF_Creator.Strategy.CREATE);
+            emf = _emf;
             instance = new UserFacade();
             
         }

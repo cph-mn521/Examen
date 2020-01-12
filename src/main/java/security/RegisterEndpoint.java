@@ -18,10 +18,12 @@ import com.nimbusds.jwt.SignedJWT;
 import entities.User;
 import errorhandling.AuthenticationException;
 import errorhandling.GenericExceptionMapper;
+import facades.UserFacade;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Consumes;
@@ -34,14 +36,18 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import static security.LoginEndpoint.TOKEN_EXPIRE_TIME;
 import static security.LoginEndpoint.USER_FACADE;
+import utils.EMF_Creator;
 
 /**
  * REST Web Service
  *
  * @author Martin
  */
-    @Path("register")
+@Path("register")
 public class RegisterEndpoint {
+
+    private static final EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory("pu", null, null, null, EMF_Creator.Strategy.CREATE);
+    public static final UserFacade USER_FACADE = UserFacade.getUserFacade(EMF);
 
     @Context
     private UriInfo context;
@@ -66,7 +72,8 @@ public class RegisterEndpoint {
         String password = json.get("password").getAsString();
         String userRole = json.get("userRole").getAsString();
         try {
-            User user = USER_FACADE.NewUser(username, password,userRole);
+
+            User user = USER_FACADE.NewUser(username, password, userRole);
             String token = createToken(username, user.getRolesAsStrings());
             String role = user.getRolesAsStrings().get(0);
             JsonObject responseJson = new JsonObject();
