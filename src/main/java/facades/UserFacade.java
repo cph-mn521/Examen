@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import errorhandling.AuthenticationException;
 import javax.persistence.RollbackException;
+import utils.EMF_Creator;
 
 /**
  * @author lam@cphbusiness.dk
@@ -47,7 +48,8 @@ public class UserFacade {
     }
 
     public User NewUser(String userName, String password, String userRole) throws AuthenticationException {
-        EntityManager em = emf.createEntityManager();
+        EntityManagerFactory emf = EMF_Creator.createEntityManagerFactory(EMF_Creator.DbSelector.DEV, EMF_Creator.Strategy.CREATE);
+    EntityManager em = emf.createEntityManager();
         User user = new User(userName, password);
         user.addRole(new Role(userRole));
         try {
