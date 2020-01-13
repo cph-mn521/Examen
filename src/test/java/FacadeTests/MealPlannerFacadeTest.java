@@ -128,7 +128,7 @@ public class MealPlannerFacadeTest {
             em.close();
         }
     }
-
+/**
     @Test
     public void TestEditDP() {
         DayPlan d11 = new DayPlan("Cheese and bacon stuffed pasta shells", "Monday");
@@ -173,7 +173,7 @@ public class MealPlannerFacadeTest {
         }
     }
 
- 
+ **/
 }
 // TODO add test methods here.
 // The methods must be annotated with annotation @Test. For example:

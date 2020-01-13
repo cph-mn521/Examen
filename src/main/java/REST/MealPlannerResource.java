@@ -17,7 +17,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.PUT;
 import javax.ws.rs.core.MediaType;
 import utils.EMF_Creator;
 import com.google.gson.Gson;
@@ -30,14 +29,11 @@ import entities.User;
 import errorhandling.AuthenticationException;
 import errorhandling.MealPlanException;
 import facades.MealPlannerFacade;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.security.RolesAllowed;
-import javax.servlet.http.HttpSession;
 import javax.ws.rs.POST;
-import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 
 /**
@@ -63,11 +59,7 @@ public class MealPlannerResource {
     @Context
     SecurityContext securityContext;
 
-    /**
-     * Creates a new instance of MealPlannerResource
-     */
-    public MealPlannerResource() {
-    }
+
 
     /**
      * Retrieves representation of an instance of REST.MealPlannerResource
@@ -92,7 +84,7 @@ public class MealPlannerResource {
     }
 
     @GET
-    @Path("/My")
+    @Path("My")
     @RolesAllowed("user")
     @Produces(MediaType.APPLICATION_JSON)
     public String getJson() {
@@ -118,8 +110,7 @@ public class MealPlannerResource {
      * @param content representation for the resource
      */
     @POST
-    @Path("/New")
-    @RolesAllowed("user")
+    @Path("New")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public String create(String jsonString) throws AuthenticationException {
@@ -127,8 +118,9 @@ public class MealPlannerResource {
         String week = json.get("week").getAsString();
         User user;
         String thisuser = securityContext.getUserPrincipal().getName();
-        List<DayPlan> dp = GSON.fromJson(json.get("dayPlans").getAsString(), new TypeToken<List<DayPlan>>() {
-        }.getType());
+        Type userListType = new TypeToken<ArrayList<DayPlan>>() {
+        }.getType();
+        List<DayPlan> dp = GSON.fromJson(json.get("dayPlans").getAsString(), userListType);
         UserFacade UF = UserFacade.getUserFacade(EMF);
         try {
             user = UF.getByName(thisuser);
@@ -145,8 +137,7 @@ public class MealPlannerResource {
     }
 
     @POST
-    @Path("/Edit/MealPlan")
-    @RolesAllowed("user")
+    @Path("Edit/MealPlan")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public String editMP(String jsonString) throws AuthenticationException {
@@ -161,7 +152,7 @@ public class MealPlannerResource {
     }
 
     @POST
-    @Path("/Edit/DayPlan")
+    @Path("Edit/DayPlan")
     @RolesAllowed("user")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -173,23 +164,24 @@ public class MealPlannerResource {
             return GSON.toJson(new msg(200, "Update Succesfull"));
         } catch (MealPlanException ex) {
             return GSON.toJson(new msg(500, "Update not Succesfull"));
-        }        
+        }
     }
+
     @POST
-    @Path("/Edit/Remove/DayPlan")
+    @Path("Edit/Remove/DayPlan")
     @RolesAllowed("user")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public String removeDP(String jsonString) throws AuthenticationException {
         JsonObject json = new JsonParser().parse(jsonString).getAsJsonObject();
         DayPlanDTO dp = GSON.fromJson(json.get("dpDTO").getAsString(), DayPlanDTO.class);
-        
+
         try {
             MPF.editDayPlan(dp.getId(), dp);
             return GSON.toJson(new msg(200, "Update Succesfull"));
         } catch (MealPlanException ex) {
             return GSON.toJson(new msg(500, "Update not Succesfull"));
-        }        
+        }
     }
-    
+
 }
