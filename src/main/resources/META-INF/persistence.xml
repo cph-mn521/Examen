@@ -8,6 +8,9 @@
     <class>entities.Products</class>
     <class>entities.TagNames</class>
     <class>entities.Adress</class>
+    <class>entities.MenuPlan</class>
+    <class>entities.DayPlan</class>
+    <class>entities.Recipe</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <!-- DO NOT remove the line below. It's not set by the  entityUtils.EMF_Creator -->
