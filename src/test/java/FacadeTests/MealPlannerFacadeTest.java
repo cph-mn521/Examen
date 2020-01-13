@@ -5,6 +5,8 @@
  */
 package FacadeTests;
 
+import DTO.DayPlanDTO;
+import DTO.MenuPlanDTO;
 import entities.DayPlan;
 import entities.MenuPlan;
 import entities.Role;
@@ -76,7 +78,7 @@ public class MealPlannerFacadeTest {
             q1.executeUpdate();
             q2.executeUpdate();
             em.getTransaction().commit();
-        }finally {
+        } finally {
             em.close();
         }
     }
@@ -92,7 +94,7 @@ public class MealPlannerFacadeTest {
             assertEquals(Count, 1);
         } catch (MealPlanException ex) {
             fail();
-        }finally {
+        } finally {
             em.close();
         }
     }
@@ -127,6 +129,51 @@ public class MealPlannerFacadeTest {
         }
     }
 
+    @Test
+    public void TestEditDP() {
+        DayPlan d11 = new DayPlan("Cheese and bacon stuffed pasta shells", "Monday");
+        DayPlan d12 = new DayPlan("Moist garlic roasted chicken", "Tuesday");
+        DayPlan d13 = new DayPlan("Tofu vindaloo", "Wednsday");
+        User user;
+        List<DayPlan> l1 = new ArrayList<>();
+        l1.add(d11);
+        l1.add(d12);
+        l1.add(d13);
+        EntityManager em = emf.createEntityManager();
+        try {
+            user = em.find(User.class, "user3");
+            assertNotNull(user);
+            MenuPlan mp = MPF.newMenuPlan("week 1", l1, user);
+            MenuPlan mp12 = MPF.newMenuPlan("week 2", l1, user);
+            User user2 = em.find(User.class, "user3");
+            assertEquals(user2.getMenu_plans().size(), 3);
+        } catch (MealPlanException ex) {
+            fail();
+        } finally {
+            em.close();
+        }
+        EntityManager nem = emf.createEntityManager();
+        try {
+            Long id = new Long("7");
+            Long i2 = new Long("2");
+            DayPlan p = nem.find(DayPlan.class, id);
+            assertNotNull(p);
+            DayPlanDTO dtop = new DayPlanDTO(p);
+            p.setDay("nydag");
+            MPF.editDayPlan(p.getId(), dtop);
+            DayPlan p2 = nem.find(DayPlan.class, id);
+            System.out.println(p2.getDay());
+            user = nem.find(User.class, "user3");
+            MenuPlan mmp = nem.find(MenuPlan.class, i2);
+            System.out.println(mmp.getDayPlans().get(0).getDay());
+        } catch (MealPlanException ex) {
+            fail();
+        } finally {
+            nem.close();
+        }
+    }
+
+ 
 }
 // TODO add test methods here.
 // The methods must be annotated with annotation @Test. For example:
