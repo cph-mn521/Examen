@@ -51,6 +51,7 @@ class ApiFacade {
             throw {status: res.status, fullError: json}
         }
         this.setToken(res.token)
+        sessionStorage.setItem("user",JSON.stringify({Username:json.username,Role:json.role}));
         return json;
     }
 
