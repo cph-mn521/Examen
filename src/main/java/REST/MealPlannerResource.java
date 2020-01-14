@@ -33,11 +33,14 @@ import facades.MealPlannerFacade;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 import javax.annotation.security.RolesAllowed;
+import javax.persistence.EntityManager;
 
 import javax.ws.rs.POST;
 import javax.ws.rs.core.SecurityContext;
 import javax.servlet.http.HttpSession;
+import javax.ws.rs.PathParam;
 
 /**
  * REST Web Service
@@ -114,8 +117,7 @@ public class MealPlannerResource {
     @POST
     @Path("New")
     @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public String create(String jsonString) throws AuthenticationException {        
+    public String create(String jsonString) throws AuthenticationException {
         JsonObject json = new JsonParser().parse(jsonString).getAsJsonObject();
         String week = json.get("week").getAsString();
         User user;
@@ -130,14 +132,24 @@ public class MealPlannerResource {
             return GSON.toJson(new msg(500, "Could not find user data"));
         }
         try {
-            
+
             MenuPlan mp = MPF.newMenuPlan(week, dp, user);
             User user2 = UF.getByName(thisuser);
-            MenuPlan m = user2.getMenu_plans().get(user2.getMenu_plans().size()-1);
+            MenuPlan m = user2.getMenu_plans().get(user2.getMenu_plans().size() - 1);
             return GSON.toJson(new MenuPlanDTO(m));
         } catch (MealPlanException ex) {
             return GSON.toJson(new msg(500, "Error in Creating Mealplan, try again Later."));
         }
+
+    }
+
+    @Path("/{id}")
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public String getById(@PathParam("id") String id) {
+        EntityManager em = EMF.createEntityManager();
+        MenuPlan mp = em.find(MenuPlan.class, new Long(id));
+        return (mp.getShoppinglist().toString());
 
     }
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { FiSearch } from 'react-icons/fi';
-import { BrowserRouter as Router, NavLink } from 'react-router-dom';
+import { BrowserRouter as Router, NavLink ,useHistory } from 'react-router-dom';
 import Login from './Login';
 import { ResultList } from './ResultList/ResultList';
 import { words } from '../global/suggestion-words';
@@ -16,6 +16,7 @@ class Navigation extends React.Component {
 
     this.searchSuggestionsRef = React.createRef();
   }
+  
 
   componentDidMount() {
     document.addEventListener('keydown', this.pressedEscape, false);
@@ -59,9 +60,9 @@ class Navigation extends React.Component {
       this.setState({ suggestions: [] });
     }
   };
-
+  
   clickSuggestionItem = item => {
-    alert('Clicked: ' + item);
+    //this.props.history.push("/recepie/"+item);
   };
 
   render() {

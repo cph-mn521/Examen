@@ -2,6 +2,7 @@ import React from 'react';
 import './styles.scss';
 import {NavLink } from 'react-router-dom';
 import { ResultRow2 } from './ResultRow2';
+import facade from '../../apiFacade';
 /*
 Dev notes on DBA
 på DBA kan der findes den box der hedder vip-aditional text som indeholder product beskrivelsen
@@ -30,13 +31,29 @@ class DescriptionBox extends React.Component {
     };
   }
 
-
-
+  
   render() {
     const {
-      obj: { imgurl, plans, description, url },
+      obj: { week, plans, description, url },
     } = this.props;
 
+    const AddToMine = async () =>{
+      
+      var wkd = ["Mandag", "Tirsdag", "Onsdag", "Torsdag", "Fredag", "Lørdag", "Søndag"]
+      var arr = [];
+      var arr =[{weekday:wkd[0] ,recipe:plans[0].recipe.id}]
+      for(let i = 0; 1 < plans.length; i++){
+        try{
+        console.log(i);
+          arr.push({weekday:wkd[i], recipe: plans[i].recipe.id})         
+        }
+        catch(error){
+          break;
+        }
+       }
+       facade.newPlan2(arr,week);
+    }
+  
     return (
       <div className="DescriptionBox">
         <table>
@@ -70,9 +87,7 @@ class DescriptionBox extends React.Component {
             }
           </tbody>
         </table>
-        <button >
-          Tilføj Til mine planer
-        </button>
+        
         <div className="container-middle">
           <p className="title"></p>
           <hr className="custom-hr" />
@@ -80,6 +95,9 @@ class DescriptionBox extends React.Component {
         </div>
 
         <div className="container-right"></div>
+        <button onClick={AddToMine}>
+          Tilføj Til mine planer
+        </button>
       </div>
     );
   }

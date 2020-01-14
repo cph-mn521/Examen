@@ -1,7 +1,7 @@
 import React from 'react';
 import facade from '../../apiFacade';
 import { ResultTable } from './ResultTable';
-import Loader from '../../components/Loader';
+import Loader from '../Loader';
 
 export class ResultList extends React.Component {
   constructor(props) {
@@ -15,7 +15,7 @@ export class ResultList extends React.Component {
     const { reslist } = this.state;
     const { loading } = this.state;
     facade.getFoodPlans().then(res => this.setState({ reslist: res })).then(this.setState({loading : false}));
-
+    
   }
 
   getDescription() {}

@@ -7,6 +7,7 @@ import User from './components/User';
 import Home from './components/Home';
 import Opskrift from './components/Opskrift';
 import NewPlan from './components/newPlan';
+import ShoppingList from './components/ShoppingList';
 import facade from './apiFacade';
 import Navigation from './components/Navigation';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -48,6 +49,9 @@ class App extends Component {
             <Route path="/user/:id">
               <User />
             </Route>
+            <Route path="/shoppinglist/:id">
+              <ShoppingList />
+            </Route>            
             <Route path="/recepie/:id">
               <Opskrift />
             </Route>

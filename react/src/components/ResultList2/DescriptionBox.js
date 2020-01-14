@@ -34,7 +34,7 @@ class DescriptionBox extends React.Component {
 
   render() {
     const {
-      obj: { imgurl, plans, description, url },
+      obj: { id, plans, description, url },
     } = this.props;
 
     return (
@@ -70,9 +70,9 @@ class DescriptionBox extends React.Component {
             }
           </tbody>
         </table>
-        <button >
-          Rediger
-        </button>
+        <NavLink className="link" to={"/shoppinglist/"+id} exact>
+                    <span>Indkøbsliste for planen</span>
+                  </NavLink>
         <div className="container-middle">
           <p className="title"></p>
           <hr className="custom-hr" />

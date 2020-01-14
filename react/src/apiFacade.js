@@ -93,6 +93,31 @@ class ApiFacade {
         return json;
     }
 
+    newPlan = async (arr,week) =>{
+        let l =sessionStorage.getItem("user")
+        let u = JSON.parse(l)
+        var opts = { week: week,user:u.Username ,dayPlans:arr };
+        var opt = this.makeOptions("POST",true,opts);
+        fetch("../api/MealPlanner/New",opt)
+    }
+    newPlan2 = async (arr,week) =>{
+        let l =sessionStorage.getItem("user")
+        if(l ==null){return 0};
+        let u = JSON.parse(l)
+        var opts = { week: week,user:u.Username ,dayPlans:arr };
+        var opt = this.makeOptions("POST",true,opts);
+        fetch("api/MealPlanner/New",opt)
+    }
+
+    getShopingList = async(id) =>{
+        const res = await fetch("../api/MealPlanner/"+id);
+        const json = await res.text();
+        
+        if(!res.ok){
+            throw {status: res.status, fullError: json}
+        }
+        return json;
+    }
 
     CheckIfUser(list){
         return fetch(URL+"/api/Example/user")

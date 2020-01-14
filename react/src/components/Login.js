@@ -96,6 +96,11 @@ const UserInfo = ({ username, role, logout }) => {
     <div className="UserInfo">
       <ul>
         <li>
+          <NavLink className="link" to="/user/newplan">
+            <span>Ny Madplan</span>
+          </NavLink>
+        </li>
+        <li>
           <NavLink className="link" to="/user/foodplans">
             <span>Mine Madplaner</span>
           </NavLink>
