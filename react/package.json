@@ -2,11 +2,7 @@
   "name": "onsdag",
   "version": "0.1.0",
   "private": true,
-<<<<<<< HEAD
   "homepage": "./",
-=======
-  "homepage": "https://matheradical.dk/Examen/",
->>>>>>> parent of 8feafa7... upd
   "proxy": "http://localhost:8080/Examen/",
   "dependencies": {
     "bootstrap": "^4.4.1",
