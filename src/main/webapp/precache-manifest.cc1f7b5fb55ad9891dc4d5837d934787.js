@@ -20,12 +20,12 @@ self.__precacheManifest = [
     "url": "./static/js/2.6e9481df.chunk.js"
   },
   {
-    "revision": "38aced5b5d46fc7d64a8412bc07cdde2",
-    "url": "./static/media/TTNorms-Medium.38aced5b.otf"
-  },
-  {
     "revision": "b8b1b86f9c4ed5a682b93ae3bff6a0ec",
     "url": "./static/media/TTNorms-Regular.b8b1b86f.otf"
+  },
+  {
+    "revision": "38aced5b5d46fc7d64a8412bc07cdde2",
+    "url": "./static/media/TTNorms-Medium.38aced5b.otf"
   },
   {
     "revision": "da1c85051ff67c047fda308c6f2f615f",

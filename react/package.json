@@ -2,11 +2,7 @@
   "name": "onsdag",
   "version": "0.1.0",
   "private": true,
-<<<<<<< HEAD
   "homepage": "./",
-=======
-  "homepage": "Examen/",
->>>>>>> parent of ef0936c... upd
   "proxy": "http://localhost:8080/Examen/",
   "dependencies": {
     "bootstrap": "^4.4.1",
