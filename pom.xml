@@ -14,7 +14,7 @@
         
         <!-- TODO: Change the URL to your own tomcat server. Used to deploy your WAR-file 
         -->
-        <remote.server>http://matheradical.dk/manager/text</remote.server>
+        <remote.server>http://142.93.172.247:8080/manager/text</remote.server>
         
     </properties>
     
