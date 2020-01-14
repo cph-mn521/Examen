@@ -1,11 +1,11 @@
 self.__precacheManifest = [
   {
-    "revision": "2691996a1ded6ba45746",
+    "revision": "97760a2f8510394c4eda",
     "url": "/Examen/static/css/main.8c595853.chunk.css"
   },
   {
-    "revision": "2691996a1ded6ba45746",
-    "url": "/Examen/static/js/main.e1eddf74.chunk.js"
+    "revision": "97760a2f8510394c4eda",
+    "url": "/Examen/static/js/main.453ccb69.chunk.js"
   },
   {
     "revision": "62a125fb997fb7b04401",
@@ -20,6 +20,10 @@ self.__precacheManifest = [
     "url": "/Examen/static/js/2.6e9481df.chunk.js"
   },
   {
+    "revision": "da1c85051ff67c047fda308c6f2f615f",
+    "url": "/Examen/static/media/TTNorms-Light.da1c8505.otf"
+  },
+  {
     "revision": "b8b1b86f9c4ed5a682b93ae3bff6a0ec",
     "url": "/Examen/static/media/TTNorms-Regular.b8b1b86f.otf"
   },
@@ -32,11 +36,7 @@ self.__precacheManifest = [
     "url": "/Examen/static/media/TTNorms-Bold.02272f01.otf"
   },
   {
-    "revision": "da1c85051ff67c047fda308c6f2f615f",
-    "url": "/Examen/static/media/TTNorms-Light.da1c8505.otf"
-  },
-  {
-    "revision": "443f69144087b0c35a1c703e345d288e",
+    "revision": "a5f20fa70827048c451533376f1995a4",
     "url": "/Examen/index.html"
   }
 ];
