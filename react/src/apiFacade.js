@@ -54,6 +54,45 @@ class ApiFacade {
         return json;
     }
 
+    getFoodPlans = async () => {
+        const res = await fetch("api/MealPlanner");
+        const json = await res.json();
+        if(!res.ok){
+            throw {status: res.status, fullError: json}
+        }
+        return json;
+    }
+
+    getMyFoodPlans = async () => {
+        let l =sessionStorage.getItem("user")
+        let u = JSON.parse(l)
+        var opts = { user : u.Username};
+        var opt = this.makeOptions("POST",true,opts)
+        const res = await fetch("../api/MealPlanner/My",opt);
+        const json = await res.json();
+        if(!res.ok){
+            throw {status: res.status, fullError: json}
+        }
+        return json;
+    }
+
+    getRecipe = async (id) =>{
+        const res = await fetch("../api/recepies/"+id);
+        const json = await res.json();
+        if(!res.ok){
+            throw {status: res.status, fullError: json}
+        }
+        return json;
+    }
+    getAllRecipe = async (id) =>{
+        const res = await fetch("../api/recepies");
+        const json = await res.json();
+        if(!res.ok){
+            throw {status: res.status, fullError: json}
+        }
+        return json;
+    }
+
 
     CheckIfUser(list){
         return fetch(URL+"/api/Example/user")

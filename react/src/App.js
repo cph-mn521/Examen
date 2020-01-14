@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
 import { ResultList } from './components/ResultList/ResultList';
+import { ResultList2 } from './components/ResultList2/ResultList2';
 import About from './components/About';
 import Loader from './components/Loader';
 import User from './components/User';
+import Home from './components/Home';
+import Opskrift from './components/Opskrift';
+import NewPlan from './components/newPlan';
 import facade from './apiFacade';
 import Navigation from './components/Navigation';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -35,17 +39,26 @@ class App extends Component {
         <Router>
           <Navigation />
           <Switch>
+            <Route path="/user/foodplans">
+              <ResultList2 />
+            </Route>
+            <Route path="/user/newplan">
+              <NewPlan />
+            </Route>
             <Route path="/user/:id">
               <User />
             </Route>
-            <Route path="/contact">
-              <About />
+            <Route path="/recepie/:id">
+              <Opskrift />
+            </Route>
+            <Route path="/madplaner">
+              <ResultList />
             </Route>
             <Route path="/loader" >
               <Loader />
             </Route>
             <Route path="/">
-              <ResultList />
+              <Home />
             </Route>
           </Switch>
         </Router>

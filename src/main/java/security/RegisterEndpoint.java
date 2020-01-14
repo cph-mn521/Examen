@@ -50,7 +50,7 @@ public class RegisterEndpoint {
             "pu",
             "jdbc:mysql://localhost:3307/EXAMEN",
             "dev",
-            "ax2", 
+            "ax2",
             EMF_Creator.Strategy.CREATE);
     public static final UserFacade USER_FACADE = UserFacade.getUserFacade(EMF);
 
@@ -75,7 +75,7 @@ public class RegisterEndpoint {
         JsonObject json = new JsonParser().parse(jsonString).getAsJsonObject();
         String username = json.get("username").getAsString();
         String password = json.get("password").getAsString();
-        String userRole = json.get("userRole").getAsString();
+        String userRole = json.get("userRole").getAsString().toLowerCase();
         try {
 
             User user = USER_FACADE.NewUser(username, password, userRole);
@@ -103,7 +103,7 @@ public class RegisterEndpoint {
             res.append(",");
         }
         String rolesAsString = res.length() > 0 ? res.substring(0, res.length() - 1) : "";
-        String issuer = "matheradical.dk";
+        String issuer = "semesterstartcode-dat3";
 
         JWSSigner signer = new MACSigner(SharedSecret.getSharedKey());
         Date date = new Date();

@@ -52,7 +52,7 @@ public class LoginEndpoint {
         String password = json.get("password").getAsString();
         try {
             User user = USER_FACADE.getVeryfiedUser(username, password);
-            String token = createToken(username, user.getRolesAsStrings());
+            String token = createToken(username, user.getRolesAsStrings());            
             String role = user.getRolesAsStrings().get(0);
             JsonObject responseJson = new JsonObject();
             responseJson.addProperty("username", username);
@@ -77,7 +77,7 @@ public class LoginEndpoint {
             res.append(",");
         }
         String rolesAsString = res.length() > 0 ? res.substring(0, res.length() - 1) : "";
-        String issuer = "matheradical.dk";
+        String issuer = "semesterstartcode-dat3";
 
         JWSSigner signer = new MACSigner(SharedSecret.getSharedKey());
         Date date = new Date();
@@ -91,6 +91,8 @@ public class LoginEndpoint {
                 .build();
         SignedJWT signedJWT = new SignedJWT(new JWSHeader(JWSAlgorithm.HS256), claimsSet);
         signedJWT.sign(signer);
+        System.out.println(new Date(date.getTime() + TOKEN_EXPIRE_TIME));
         return signedJWT.serialize();
+
     }
 }

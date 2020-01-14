@@ -23,6 +23,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+
 import entities.DayPlan;
 import entities.MenuPlan;
 import entities.User;
@@ -33,8 +34,10 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.security.RolesAllowed;
+
 import javax.ws.rs.POST;
 import javax.ws.rs.core.SecurityContext;
+import javax.servlet.http.HttpSession;
 
 /**
  * REST Web Service
@@ -44,6 +47,12 @@ import javax.ws.rs.core.SecurityContext;
 @Path("MealPlanner")
 public class MealPlannerResource {
 
+    @Context
+    private UriInfo context;
+
+    @Context
+    SecurityContext securityContext;
+
     private static final EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory(
             "pu",
             "jdbc:mysql://localhost:3307/EXAMEN",
@@ -52,14 +61,6 @@ public class MealPlannerResource {
             EMF_Creator.Strategy.CREATE);
     public static final MealPlannerFacade MPF = MealPlannerFacade.getUserFacade(EMF);
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
-
-    @Context
-    private UriInfo context;
-
-    @Context
-    SecurityContext securityContext;
-
-
 
     /**
      * Retrieves representation of an instance of REST.MealPlannerResource
@@ -83,12 +84,13 @@ public class MealPlannerResource {
         return GSON.toJson(mp);
     }
 
-    @GET
+    @POST
     @Path("My")
-    @RolesAllowed("user")
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public String getJson() {
-        String thisuser = securityContext.getUserPrincipal().getName();
+    public String getJson(String jsonString) {
+        JsonObject json = new JsonParser().parse(jsonString).getAsJsonObject();
+        String thisuser = json.get("user").getAsString();
         UserFacade UF = UserFacade.getUserFacade(EMF);
         try {
             User user = UF.getByName(thisuser);
@@ -113,14 +115,14 @@ public class MealPlannerResource {
     @Path("New")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public String create(String jsonString) throws AuthenticationException {
+    public String create(String jsonString) throws AuthenticationException {        
         JsonObject json = new JsonParser().parse(jsonString).getAsJsonObject();
         String week = json.get("week").getAsString();
         User user;
-        String thisuser = securityContext.getUserPrincipal().getName();
+        String thisuser = json.get("user").getAsString();
         Type userListType = new TypeToken<ArrayList<DayPlan>>() {
         }.getType();
-        List<DayPlan> dp = GSON.fromJson(json.get("dayPlans").getAsString(), userListType);
+        List<DayPlan> dp = GSON.fromJson(json.get("dayPlans").getAsJsonArray().toString(), userListType);
         UserFacade UF = UserFacade.getUserFacade(EMF);
         try {
             user = UF.getByName(thisuser);
@@ -128,8 +130,11 @@ public class MealPlannerResource {
             return GSON.toJson(new msg(500, "Could not find user data"));
         }
         try {
+            
             MenuPlan mp = MPF.newMenuPlan(week, dp, user);
-            return GSON.toJson(new MenuPlanDTO(mp));
+            User user2 = UF.getByName(thisuser);
+            MenuPlan m = user2.getMenu_plans().get(user2.getMenu_plans().size()-1);
+            return GSON.toJson(new MenuPlanDTO(m));
         } catch (MealPlanException ex) {
             return GSON.toJson(new msg(500, "Error in Creating Mealplan, try again Later."));
         }

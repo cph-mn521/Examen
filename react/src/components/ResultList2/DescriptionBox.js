@@ -71,7 +71,7 @@ class DescriptionBox extends React.Component {
           </tbody>
         </table>
         <button >
-          Tilføj Til mine planer
+          Rediger
         </button>
         <div className="container-middle">
           <p className="title"></p>

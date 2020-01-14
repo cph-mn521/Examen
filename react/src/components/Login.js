@@ -96,14 +96,20 @@ const UserInfo = ({ username, role, logout }) => {
     <div className="UserInfo">
       <ul>
         <li>
-          <NavLink className="link" to="/user/123">
-            <span>Profil {username}</span>
+          <NavLink className="link" to="/user/foodplans">
+            <span>Mine Madplaner</span>
           </NavLink>
         </li>
         <li>
+          <NavLink className="link" to={"/user/" + { username }}>
+            <span>Profil {username}</span>
+          </NavLink>
+
+        </li>
+        <li>
           <button onClick={onLogout} className="login">
-          <span>Logud</span>
-      </button>
+            <span>Logud</span>
+          </button>
         </li>
       </ul>
     </div>

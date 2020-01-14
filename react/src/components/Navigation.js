@@ -74,8 +74,8 @@ class Navigation extends React.Component {
               <NavLink className="link" to="/" exact>
                 <span>HOME</span>
               </NavLink>
-              <NavLink className="link" to="/contact">
-                <span>LIVE LOG</span>
+              <NavLink className="link" to="/madplaner">
+                <span>Madplaner</span>
               </NavLink>
             </div>
             <div className="container-search">
