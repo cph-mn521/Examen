@@ -1,5 +1,5 @@
 /* eslint-disable no-throw-literal */
-const URL = "http://142.93.172.247:8080/Examen/";
+const URL = "../Examen/";
 //const URL = "http://localhost:8080/ca3";
 function handleHttpErrors(res) {
     if (!res.ok) {
